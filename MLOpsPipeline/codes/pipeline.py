@@ -101,3 +101,6 @@ model_pipeline = Pipeline(
         ("gbm", GradientBoostingRegressor(random_state=42))
     ]
 )
+
+def create_pipeline():
+    return model_pipeline
