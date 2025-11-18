@@ -1,0 +1,1 @@
+python3 train.py --slice 3 --output ../models/slice3.pkl
