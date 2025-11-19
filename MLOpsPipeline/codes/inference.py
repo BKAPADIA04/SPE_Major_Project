@@ -11,7 +11,7 @@ def predict_fare(model, input_data: dict):
     return prediction
 
 if __name__ == "__main__":
-    model = load_model("../models/slice2.pkl")
+    model = load_model("../models/slice10.pkl")
 
     sample = {
         "pickup_datetime": "2022-05-07 14:30:00 UTC",
