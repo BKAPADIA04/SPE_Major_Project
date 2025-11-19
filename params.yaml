@@ -1,0 +1,3 @@
+train:
+  slice: 1
+  output: /MLOpsPipeline/models/slice1.pkl

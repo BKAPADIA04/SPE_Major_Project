@@ -3,3 +3,11 @@ python3 train.py --slice 3 --output ../models/slice3.pkl
 uvicorn api:app --reload --port 8000
 
 both the above commands from codes directory
+
+git rm -r --cached 'MLOpsPipeline/data/data_slices/slice_1.csv'
+git commit -m "stop tracking MLOpsPipeline/data/data_slices/slice_1.csv"
+
+dvc add MLOpsPipeline/data/data_slices/slice_1.csv 
+
+git add MLOpsPipeline/data/data_slices/slice_1.csv.dvc MLOpsPipeline/data/data_slices/.gitignore
+git commit -m "Track training data with DVC"
