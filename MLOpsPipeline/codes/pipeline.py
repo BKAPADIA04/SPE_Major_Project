@@ -6,6 +6,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.impute import SimpleImputer
 
 # ===== CUSTOM MAPPING =====
 def map_ambulance_type(passenger_count):
@@ -38,6 +39,8 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
 
     def transform(self, df):
         df = df.copy()
+        
+        
 
         # Ensure datetime parsed
         df["pickup_datetime"] = pd.to_datetime(df["pickup_datetime"])
@@ -78,10 +81,12 @@ numeric_features = [
 categorical_features = ["ambulance_type"]
 
 numeric_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="median")),
     ("scaler", StandardScaler())
 ])
 
 categorical_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="most_frequent")),
     ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False))
 ])
 
