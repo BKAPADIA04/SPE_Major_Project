@@ -8,3 +8,4 @@ uvicorn[standard]
 pytest
 requests
 python-dotenv
+dvc

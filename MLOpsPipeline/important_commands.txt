@@ -1,1 +1,5 @@
 python3 train.py --slice 3 --output ../models/slice3.pkl
+
+uvicorn api:app --reload --port 8000
+
+both the above commands from codes directory
