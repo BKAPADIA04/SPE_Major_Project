@@ -34,11 +34,21 @@ pipeline {
             }
         }
 
+
         stage('Add Pipeline') {
             steps {
                 sh """
                     . venv/bin/activate
                     dvc add MLOpsPipeline/data/data_slices
+                """
+            }
+        }
+
+        stage('Show Slice Count') {
+            steps {
+                sh """
+                    echo "==== GENERATED SLICE COUNT ===="
+                    cat MLOpsPipeline/codes/params.log || echo "No params.log found"
                 """
             }
         }

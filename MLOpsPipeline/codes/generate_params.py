@@ -19,3 +19,6 @@ with open("params.yaml", "w") as f:
     yaml.dump(params, f)
 
 print(f"params.yaml updated → slice = {slice_count}")
+
+with open("MLOpsPipeline/codes/params.log", "w") as f:
+    f.write(f"slice_count: {slice_count}\n")
