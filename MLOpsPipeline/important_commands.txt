@@ -11,3 +11,8 @@ dvc add MLOpsPipeline/data/data_slices/slice_1.csv
 
 git add MLOpsPipeline/data/data_slices/slice_1.csv.dvc MLOpsPipeline/data/data_slices/.gitignore
 git commit -m "Track training data with DVC"
+
+dvc add MLOpsPipeline/data/data_slices 
+git add MLOpsPipeline/data/data_slices.dvc
+git commit -m "Added slice_3.csv"
+dvc repro

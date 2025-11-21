@@ -1,0 +1,16 @@
+stages:
+  train:
+    deps:
+      - MLOpsPipeline/data/data_slices
+      - MLOpsPipeline/codes/train.py
+      - MLOpsPipeline/codes/pipeline.py
+      - MLOpsPipeline/codes/data_loader.py
+
+    params:
+      - train.slice
+      - train.output
+
+    outs:
+      - MLOpsPipeline/models/model.pkl
+
+    cmd: python3 MLOpsPipeline/codes/train.py --slice ${train.slice} --output ${train.output}

@@ -1,18 +1,29 @@
-import pandas as pd
 import os
+import pandas as pd
+import glob
 
-def load_sliding_window(current_slice, base_dir="../data/data_slices", window=2):
+def load_sliding_window(slice_id):
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # codes/
+    project_root = os.path.dirname(base_dir)               # MLOpsPipeline/
+    data_dir = os.path.join(project_root, "data", "data_slices")
+
+    # 1. Load all existing slices
+    slice_files = glob.glob(os.path.join(data_dir, "slice_*.csv"))
+
     dfs = []
 
-    # Calculate start slice number (can't be < 1)
-    start = max(1, current_slice - window + 1)
+    for file in slice_files:
+        dfs.append(pd.read_csv(file))
 
-    for i in range(start, current_slice + 1):
-        path = os.path.join(base_dir, f"slice_{i}.csv")
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"{path} does not exist")
-        
-        dfs.append(pd.read_csv(path))
+    # 2. Load the requested slice (append last)
+    new_slice_path = os.path.join(data_dir, f"slice_{slice_id}.csv")
 
-    # Combine into one dataframe
-    return pd.concat(dfs, ignore_index=True)
+    if not os.path.exists(new_slice_path):
+        raise FileNotFoundError(f"{new_slice_path} does not exist")
+
+    dfs.append(pd.read_csv(new_slice_path))
+
+    # 3. Concatenate all slices
+    combined = pd.concat(dfs, ignore_index=True)
+
+    return combined
