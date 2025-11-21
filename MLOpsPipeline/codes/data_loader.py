@@ -26,4 +26,6 @@ def load_sliding_window(slice_id):
     # 3. Concatenate all slices
     combined = pd.concat(dfs, ignore_index=True)
 
+    print(combined.head(10).to_string())
+
     return combined

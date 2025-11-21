@@ -3,10 +3,6 @@ pipeline {
 
     environment {
         PATH = "/usr/local/bin:${env.PATH}"
-
-
-
-
     }
 
     stages {
@@ -23,6 +19,15 @@ pipeline {
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r requirements.txt
+                """
+            }
+        }
+
+        stage('Add DVC Data') {
+            steps {
+                sh """
+                    . venv/bin/activate
+                    dvc add MLOpsPipeline/data/data_slices 
                 """
             }
         }

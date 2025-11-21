@@ -1,10 +1,19 @@
 stages:
+  gen_params:
+    deps:
+      - MLOpsPipeline/data/data_slices
+      - MLOpsPipeline/codes/generate_params.py
+    cmd: python3 MLOpsPipeline/codes/generate_params.py
+    outs:
+      - params.yaml
+
   train:
     deps:
       - MLOpsPipeline/data/data_slices
       - MLOpsPipeline/codes/train.py
       - MLOpsPipeline/codes/pipeline.py
       - MLOpsPipeline/codes/data_loader.py
+      - params.yaml
 
     params:
       - train.slice

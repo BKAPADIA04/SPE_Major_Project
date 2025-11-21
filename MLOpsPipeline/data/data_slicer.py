@@ -27,4 +27,5 @@ def split_into_slices(input_path, output_dir="data_slices_all", num_slices=10):
 
 
 if __name__ == "__main__":
+    print("hi")
     split_into_slices("uber.csv")
