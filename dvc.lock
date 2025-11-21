@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   train:
-    cmd: python3 MLOpsPipeline/codes/train.py --slice 1 --output 
+    cmd: python3 MLOpsPipeline/codes/train.py --slice 5 --output 
       MLOpsPipeline/models/model.pkl
     deps:
     - path: MLOpsPipeline/codes/data_loader.py
@@ -18,11 +18,15 @@ stages:
       size: 1136
     - path: MLOpsPipeline/data/data_slices
       hash: md5
-      md5: 8a1d63a39cee889aa1090e2fede76d1b.dir
-      size: 1542713
-      nfiles: 1
+      md5: 3a971c95d6746077cd4c8208a22f32c3.dir
+      size: 7716014
+      nfiles: 5
+    params:
+      params.yaml:
+        train.output: MLOpsPipeline/models/model.pkl
+        train.slice: 5
     outs:
     - path: MLOpsPipeline/models/model.pkl
       hash: md5
-      md5: 73faa11553849fbfa37e7d4434b2810e
-      size: 145213
+      md5: 2bd7df803949839530e502952ed4b009
+      size: 145789
