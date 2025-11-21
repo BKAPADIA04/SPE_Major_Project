@@ -1,3 +1,0 @@
-train:
-  slice: 6
-  output: MLOpsPipeline/models/model.pkl
