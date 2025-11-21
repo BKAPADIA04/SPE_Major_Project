@@ -13,26 +13,19 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Setup Python Environment') {
             steps {
                 sh """
                     python3 -m venv venv
                     . venv/bin/activate
+                    pip install --upgrade pip
                     pip install -r requirements.txt
+                    pip install dvc[yaml]
                 """
             }
         }
 
-        stage('Add DVC Data') {
-            steps {
-                sh """
-                    . venv/bin/activate
-                    dvc add MLOpsPipeline/data/data_slices 
-                """
-            }
-        }
-
-        stage('Pull DVC Data') {
+        stage('DVC Pull') {
             steps {
                 sh """
                     . venv/bin/activate
@@ -41,7 +34,7 @@ pipeline {
             }
         }
 
-        stage('Reproduce Pipeline') {
+        stage('Run DVC Pipeline') {
             steps {
                 sh """
                     . venv/bin/activate
@@ -50,11 +43,24 @@ pipeline {
             }
         }
 
-        stage('Push Updated Artifacts to Local DVC Storage') {
+        stage('Push DVC Artifacts') {
             steps {
                 sh """
                     . venv/bin/activate
                     dvc push --remote local_remote
+                """
+            }
+        }
+
+        stage('Commit Updated Lockfile') {
+            steps {
+                sh """
+                    git config user.email "jenkins@example.com"
+                    git config user.name "Jenkins"
+
+                    git add dvc.lock
+                    git commit -m "Auto-update: retrained model via Jenkins" || true
+                    git push origin main || true
                 """
             }
         }
