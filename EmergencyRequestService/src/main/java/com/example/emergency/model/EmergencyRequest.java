@@ -1,0 +1,75 @@
+package com.example.emergency.model;
+
+import java.time.Instant;
+import java.util.UUID;
+
+public class EmergencyRequest {
+
+    private UUID id;
+    private String patientName;
+    private double latitude;
+    private double longitude;
+    private EmergencyStatus status;
+    private Instant createdAt;
+
+    public EmergencyRequest(UUID id, String patientName, double latitude, double longitude,
+                            EmergencyStatus status, Instant createdAt) {
+        this.id = id;
+        this.patientName = patientName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public EmergencyRequest() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public EmergencyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EmergencyStatus status) {
+        this.status = status;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+}
