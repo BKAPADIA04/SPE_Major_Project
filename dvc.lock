@@ -1,0 +1,28 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python3 MLOpsPipeline/codes/train.py --slice 1 --output 
+      MLOpsPipeline/models/model.pkl
+    deps:
+    - path: MLOpsPipeline/codes/data_loader.py
+      hash: md5
+      md5: b4929ecabe956e6849bb8ef1ca2a3a9b
+      size: 849
+    - path: MLOpsPipeline/codes/pipeline.py
+      hash: md5
+      md5: d9c3e5227cf00a573eac64def08cbf45
+      size: 3321
+    - path: MLOpsPipeline/codes/train.py
+      hash: md5
+      md5: c74243eeb3bda98752b3979a89696e11
+      size: 1136
+    - path: MLOpsPipeline/data/data_slices
+      hash: md5
+      md5: 8a1d63a39cee889aa1090e2fede76d1b.dir
+      size: 1542713
+      nfiles: 1
+    outs:
+    - path: MLOpsPipeline/models/model.pkl
+      hash: md5
+      md5: 73faa11553849fbfa37e7d4434b2810e
+      size: 145213
