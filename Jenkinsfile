@@ -25,14 +25,14 @@ pipeline {
             }
         }
 
-        // stage('DVC Pull') {
-        //     steps {
-        //         sh """
-        //             . venv/bin/activate
-        //             dvc pull --remote local_remote
-        //         """
-        //     }
-        // }
+        stage('DVC Pull') {
+            steps {
+                sh """
+                    . venv/bin/activate
+                    dvc pull --remote localremote
+                """
+            }
+        }
 
         stage('Add Pipeline') {
             steps {
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 sh """
                     . venv/bin/activate
-                    dvc push --remote local_remote
+                    dvc push --remote localremote
                 """
             }
         }
