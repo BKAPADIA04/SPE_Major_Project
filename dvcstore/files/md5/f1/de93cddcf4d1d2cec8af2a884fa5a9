@@ -13,11 +13,13 @@ stages:
       - MLOpsPipeline/codes/train.py
       - MLOpsPipeline/codes/pipeline.py
       - MLOpsPipeline/codes/data_loader.py
-      - params.yaml
+      - params.yaml         # <-- VERY IMPORTANT
+      - MLOpsPipeline/codes/generate_params.py  # <-- Forces correct ordering
+
+    params:
+      - train               # <-- Track whole config
+
     outs:
       - MLOpsPipeline/models/model.pkl
-    cmd: "python3 MLOpsPipeline/codes/train.py \
-        --slice $(yq -r '.train.slice' params.yaml) \
-        --output $(yq -r '.train.output' params.yaml)"
 
-
+    cmd: python3 MLOpsPipeline/codes/train.py --slice ${train.slice} --output ${train.output}
