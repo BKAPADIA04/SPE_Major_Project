@@ -52,6 +52,16 @@ pipeline {
             }
         }
 
+        stage('Show Training Metrics') {
+            steps {
+                sh """
+                    echo "==== TRAINING METRICS (from train.log) ===="
+                    cat MLOpsPipeline/codes/train.log || echo "No metrics file found"
+                """
+            }
+        }
+
+
         stage('Push DVC Artifacts') {
             steps {
                 sh """

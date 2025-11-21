@@ -27,6 +27,10 @@ def train_model(current_slice, output_path="../models/ambulance_model.pkl"):
     print("MSE:", mean_squared_error(y_test, preds))
     print("R2 Score:", r2_score(y_test, preds))
 
+    with open("MLOpsPipeline/codes/train.log", "w") as f:
+        f.write(f"MSE: {mean_squared_error(y_test, preds)}\n")
+        f.write(f"R2 Score: {r2_score(y_test, preds)}\n")
+
     joblib.dump(model, output_path)
     print(f"Model saved to {output_path}")
 
