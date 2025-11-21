@@ -28,11 +28,15 @@ pipeline {
         stage('Install yq') {
             steps {
                 sh '''
-                    wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
-                    chmod +x /usr/local/bin/yq
+                    mkdir -p bin
+                    curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_darwin_amd64 -o bin/yq
+                    chmod +x bin/yq
+                    export PATH=$WORKSPACE/bin:$PATH
+                    echo "yq installed at $WORKSPACE/bin/yq"
                 '''
             }
         }
+
 
 
         stage('DVC Pull') {
