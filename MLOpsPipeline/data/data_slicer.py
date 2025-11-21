@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 
-def split_into_slices(input_path, output_dir="data_slices", num_slices=10):
+def split_into_slices(input_path, output_dir="data_slices_all", num_slices=10):
     # Load data
     df = pd.read_csv(input_path)
 
