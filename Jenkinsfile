@@ -25,11 +25,20 @@ pipeline {
             }
         }
 
-        stage('DVC Pull') {
+        // stage('DVC Pull') {
+        //     steps {
+        //         sh """
+        //             . venv/bin/activate
+        //             dvc pull --remote local_remote
+        //         """
+        //     }
+        // }
+
+        stage('Add Pipeline') {
             steps {
                 sh """
                     . venv/bin/activate
-                    dvc pull --remote local_remote
+                    dvc add MLOpsPipeline/data/data_slices
                 """
             }
         }
@@ -52,17 +61,17 @@ pipeline {
             }
         }
 
-        stage('Commit Updated Lockfile') {
-            steps {
-                sh """
-                    git config user.email "jenkins@example.com"
-                    git config user.name "Jenkins"
+        // stage('Commit Updated Lockfile') {
+        //     steps {
+        //         sh """
+        //             git config user.email "jenkins@example.com"
+        //             git config user.name "Jenkins"
 
-                    git add dvc.lock
-                    git commit -m "Auto-update: retrained model via Jenkins" || true
-                    git push origin main || true
-                """
-            }
-        }
+        //             git add dvc.lock
+        //             git commit -m "Auto-update: retrained model via Jenkins" || true
+        //             git push origin main || true
+        //         """
+        //     }
+        // }
     }
 }
