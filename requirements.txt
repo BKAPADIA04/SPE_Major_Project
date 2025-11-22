@@ -9,3 +9,5 @@ pytest
 requests
 python-dotenv
 dvc
+dvc[gdrive]
+mlflow

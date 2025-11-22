@@ -3,6 +3,9 @@ pipeline {
 
     environment {
         PATH = "/usr/local/bin:${env.PATH}"
+        REMOTE = "gdrive_remote"                             // your DVC remote name
+        VENV = "venv"
+        GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/dvc-remote-479006-8eda1e952b02.json"
     }
 
     options {
@@ -10,6 +13,12 @@ pipeline {
     }
 
     stages {
+
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
 
         stage('Checkout Code') {
             steps {
@@ -20,11 +29,11 @@ pipeline {
         stage('Setup Python Environment') {
             steps {
                 sh """
-                    python3 -m venv venv
-                    . venv/bin/activate
+                    python3 -m venv ${VENV}
+                    . ${VENV}/bin/activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
-                    pip install dvc[yaml]
+                    pip install 'dvc[gdrive]' mlflow
                 """
             }
         }
@@ -33,54 +42,64 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p $WORKSPACE/bin
-                    curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_darwin_arm64 \
+                    curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
                         -o $WORKSPACE/bin/yq
                     chmod +x $WORKSPACE/bin/yq
                 '''
             }
         }
 
-        stage('DVC Pull') {
+        stage('DVC Pull From GDrive') {
             environment {
                 PATH = "$WORKSPACE/bin:${env.PATH}"
             }
             steps {
                 sh """
-                    . venv/bin/activate
+                    . ${VENV}/bin/activate
                     yq --version
-                    dvc pull --remote local_remote --force
-                    dvc checkout
+                    echo "DVC remotes:"
+                    dvc remote list
+                    echo "Pulling artifacts from GDrive..."
+                    dvc pull -r ${REMOTE} --force
                 """
             }
         }
 
-        stage('Run DVC Pipeline (Force)') {
+        stage('Run DVC Pipeline') {
             steps {
                 sh """
-                    . venv/bin/activate
+                    . ${VENV}/bin/activate
+                    echo "Reproducing DVC pipeline..."
                     dvc repro --force
                 """
             }
         }
 
-        stage('Show Training Metrics') {
+        stage('Register Model in MLflow') {
             steps {
                 sh """
-                    echo "==== TRAINING METRICS (from train.log) ===="
-                    cat MLOpsPipeline/codes/train.log || echo "No metrics file found"
+                    . ${VENV}/bin/activate
+                    echo "Registering model in MLflow..."
+                    python3 MLOpsPipeline/codes/register_model.py
                 """
             }
         }
 
-        stage('Push DVC Artifacts') {
+        stage('Push Artifacts to GDrive') {
             steps {
                 sh """
-                    . venv/bin/activate
-                    dvc push --remote local_remote
+                    . ${VENV}/bin/activate
+                    echo "Pushing updated artifacts to GDrive..."
+                    dvc push -r ${REMOTE}
                 """
             }
         }
-        
-
     }
+
+    // post {
+    //     always {
+    //         echo "Cleaning up virtual environment..."
+    //         sh "rm -rf ${VENV}"
+    //     }
+    // }
 }

@@ -1,8 +1,6 @@
 [core]
     remote = gdrive_remote
-['remote "local_remote"']
-    url = /Users/bhavyakapadia/dvc_storage
-['remote "localremote"']
-    url = ../dvcstore
 ['remote "gdrive_remote"']
-    url = ../gdrive:17YkAEoFkr_w6Uc0tsqg11y2BfR6lMp-W
+    url = gdrive://1iUTL5Kbno8rfmOk1t7OgNX8qiFCmfsSJ
+    gdrive_use_service_account = true
+    gdrive_service_account_json_file_path = /Users/bhavyakapadia/.jenkins/workspace/SPE_Project/dvc-remote-479006-f1756ff09257.json

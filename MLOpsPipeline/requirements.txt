@@ -9,3 +9,7 @@ pytest
 requests
 python-dotenv
 dvc
+gdown 
+pydrive2 
+google-auth 
+google-auth-oauthlib

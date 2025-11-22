@@ -18,6 +18,21 @@ git commit -m "Added slice_3.csv"
 dvc repro
 
 dvc add MLOpsPipeline/data/data_slices
-git add .
+git add MLOpsPipeline/data/data_slices.dvc dvc.lock params.yaml
 git commit -m "Update CSV slices"
 git push
+
+dvc remove MLOpsPipeline/data/data_slices.dvc
+
+dvc add MLOpsPipeline/data/data_slices
+git add MLOpsPipeline/data/data_slices.dvc dvc.lock params.yaml
+git commit -m "Update CSV slices"
+git push origin jenkins
+
+dvc remote remove gdrive_remote
+
+dvc remote add -d gdrive_remote gdrive://1iUTL5Kbno8rfmOk1t7OgNX8qiFCmfsSJ
+
+dvc remote modify gdrive_remote gdrive_use_service_account true
+dvc remote modify gdrive_remote gdrive_service_account_json_file_path \
+    /Users/bhavyakapadia/.jenkins/workspace/SPE_Project/dvc-remote-479006-f1756ff09257.json
