@@ -39,7 +39,7 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p $WORKSPACE/bin
-                    curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+                    curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_darwin_arm64 \
                         -o $WORKSPACE/bin/yq
                     chmod +x $WORKSPACE/bin/yq
                 '''
