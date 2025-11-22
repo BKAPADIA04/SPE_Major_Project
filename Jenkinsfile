@@ -11,12 +11,6 @@ pipeline {
 
     stages {
 
-        stage('Clean Workspace') {
-            steps {
-                deleteDir()
-            }
-        }
-
         stage('Checkout Code') {
             steps {
                 git branch: 'jenkins', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
@@ -54,7 +48,8 @@ pipeline {
                 sh """
                     . venv/bin/activate
                     yq --version
-                    dvc pull --remote local_remote || true
+                    dvc pull --remote local_remote --force
+                    dvc checkout
                 """
             }
         }
