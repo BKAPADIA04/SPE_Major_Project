@@ -16,3 +16,8 @@ dvc add MLOpsPipeline/data/data_slices
 git add MLOpsPipeline/data/data_slices.dvc
 git commit -m "Added slice_3.csv"
 dvc repro
+
+dvc add MLOpsPipeline/data/data_slices
+git add .
+git commit -m "Update CSV slices"
+git push
