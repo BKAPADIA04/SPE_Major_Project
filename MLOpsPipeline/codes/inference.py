@@ -21,3 +21,4 @@ if __name__ == "__main__":
     fare = predict_fare(model, sample)
     print("Predicted Fare:", fare)
     print("Predicted Fare:", fare*89.876)
+    
