@@ -3,4 +3,4 @@
 ['remote "local_remote"']
     url = /Users/bhavyakapadia/dvc_storage
 ['remote "localremote"']
-    url = ../dvcstore
+    url = /Users/bhavyakapadia/dvcStorage
