@@ -9,7 +9,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
+                git branch: 'fixOps', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
             }
         }
 
@@ -35,14 +35,14 @@ pipeline {
         }
 
 
-        stage('Add Pipeline') {
-            steps {
-                sh """
-                    . venv/bin/activate
-                    dvc add MLOpsPipeline/data/data_slices
-                """
-            }
-        }
+        // stage('Add Pipeline') {
+        //     steps {
+        //         sh """
+        //             . venv/bin/activate
+        //             dvc add MLOpsPipeline/data/data_slices
+        //         """
+        //     }
+        // }
 
         stage('Show Slice Count') {
             steps {
