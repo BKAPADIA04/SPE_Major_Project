@@ -9,7 +9,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
+                git branch: 'fixOps', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
             }
         }
 
