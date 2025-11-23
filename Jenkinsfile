@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'mlflow', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
-                
+
             }
         }
 
@@ -78,6 +78,15 @@ pipeline {
                 sh """
                     . venv/bin/activate
                     dvc push --remote localremote
+                """
+            }
+        }
+
+        stage('Train & Register Model (MLflow v2, v3...)') {
+            steps {
+                sh """
+                    . venv/bin/activate
+                    python MLOpsPipeline/codes/register_model.py
                 """
             }
         }
