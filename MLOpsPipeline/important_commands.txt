@@ -9,6 +9,7 @@ git commit -m "stop tracking MLOpsPipeline/data/data_slices/slice_1.csv"
 
 dvc add MLOpsPipeline/data/data_slices/slice_1.csv 
 
+
 git add MLOpsPipeline/data/data_slices/slice_1.csv.dvc MLOpsPipeline/data/data_slices/.gitignore
 git commit -m "Track training data with DVC"
 
