@@ -35,14 +35,14 @@ pipeline {
         }
 
 
-        stage('Add Pipeline') {
-            steps {
-                sh """
-                    . venv/bin/activate
-                    dvc add MLOpsPipeline/data/data_slices
-                """
-            }
-        }
+        // stage('Add Pipeline') {
+        //     steps {
+        //         sh """
+        //             . venv/bin/activate
+        //             dvc add MLOpsPipeline/data/data_slices
+        //         """
+        //     }
+        // }
 
         stage('Show Slice Count') {
             steps {
