@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ambulance-service
+  namespace: spe-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ambulance-service
+  template:
+    metadata:
+      labels:
+        app: ambulance-service
+    spec:
+      containers:
+        - name: ambulance-service
+          image: ambulance-location-service:local
+          ports:
+            - containerPort: 8083

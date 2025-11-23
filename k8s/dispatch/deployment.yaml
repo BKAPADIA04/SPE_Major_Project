@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dispatch-service
+  namespace: spe-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dispatch-service
+  template:
+    metadata:
+      labels:
+        app: dispatch-service
+    spec:
+      containers:
+        - name: dispatch-service
+          image: dispatch-service:local
+          ports:
+            - containerPort: 8082
+          env:
+            - name: AMBULANCE_SERVICE_BASE_URL
+              value: "http://ambulance-service.spe-system.svc.cluster.local:8083"

@@ -17,7 +17,7 @@ public class EmergencyController {
     private final EmergencyService emergencyService;
 
     public EmergencyController(EmergencyService emergencyService) {
-        this.emergencyService = emergencyService;
+        this.emergencyService = emergencyService; 
     }
 
     @PostMapping
