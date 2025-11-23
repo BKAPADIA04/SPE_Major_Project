@@ -9,7 +9,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'fixOps', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
+                git branch: 'mlflow', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
+                
             }
         }
 
