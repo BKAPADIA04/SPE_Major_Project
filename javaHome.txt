@@ -3,3 +3,5 @@ export PATH=$JAVA_HOME/bin:$PATH
 
 
 mvn spring-boot:run
+
+ngrok http 8090 --hostname=nonpharmaceutic-claud-movingly.ngrok-free.dev
