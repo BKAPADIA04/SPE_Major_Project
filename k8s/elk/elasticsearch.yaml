@@ -21,8 +21,10 @@ spec:
           env:
             - name: discovery.type
               value: single-node
-            - name: ELASTIC_PASSWORD          # <-- Add this
-              value: "MyElasticPwd123!"      # <-- Replace with a strong password
+            - name: xpack.security.enabled
+              value: "false"
+            - name: xpack.security.http.ssl.enabled
+              value: "false"
           resources:
             limits:
               memory: "2Gi"

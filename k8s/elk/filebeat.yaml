@@ -1,10 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: default
+data:
+  filebeat.yml: |
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          namespaces:
+            - default
+          hints.enabled: true
+
+    processors:
+      - add_cloud_metadata: ~
+
+    output.elasticsearch:
+      hosts: ["http://elasticsearch.default.svc.cluster.local:9200"]
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: filebeat
   namespace: default
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -22,7 +41,6 @@ rules:
   resources:
     - deployments
   verbs: ["get", "list", "watch"]
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -36,29 +54,6 @@ subjects:
 - kind: ServiceAccount
   name: filebeat
   namespace: default
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: filebeat-config
-  namespace: default
-data:
-  filebeat.yml: |
-    filebeat.autodiscover:
-      providers:
-        - type: kubernetes
-          node: ${NODE_NAME}
-          namespaces: 
-            - spe-system-1
-          hints.enabled: true
-
-    processors:
-      - add_cloud_metadata: ~
-
-    output.elasticsearch:
-      hosts: ["http://elasticsearch.default.svc.cluster.local:9200"]
-
 ---
 apiVersion: apps/v1
 kind: DaemonSet
