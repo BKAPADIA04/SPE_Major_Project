@@ -1,8 +1,12 @@
 import mlflow
 import mlflow.sklearn
 import joblib
+import os
 
-MODEL_PATH = "../models/model.pkl"
+# Option 1: relative to script location
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(SCRIPT_DIR, "../models/model.pkl")
+
 
 def register_model():
 
