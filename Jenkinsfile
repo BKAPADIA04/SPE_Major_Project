@@ -112,14 +112,6 @@ pipeline {
             }
         }
 
-        stage('Check Docker Images') {
-            steps {
-                sh """
-                    docker images
-                """
-            }
-        }
-
         stage('Apply k8s') {
             steps {
                 sh """

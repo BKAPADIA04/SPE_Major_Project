@@ -23,6 +23,7 @@ minikube service ambulance-service --url -n spe-system-1
 
 minikube start --driver=docker --cpus=4 --memory=7800
 minikube service kibana
+minikube service kibana -n default
 eval $(minikube docker-env) 
 
 cd AmbulanceLocationService 
