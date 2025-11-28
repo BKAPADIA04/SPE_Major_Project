@@ -11,27 +11,28 @@ COPY mvnw .
 COPY .mvn .mvn
 
 # Download dependencies (cached)
-RUN mvn -B dependency:go-offline
+RUN ./mvnw -B dependency:go-offline || mvn -B dependency:go-offline
 
-# Copy actual source code
+# Copy src only after dependency cache is built
 COPY src ./src
 
 # Build JAR
-RUN mvn -B clean package -DskipTests
+RUN ./mvnw -B clean package -DskipTests || mvn -B clean package -DskipTests
 
 
 # =============================
-# 2) Run Stage (lightweight runtime)
+# 2) Run Stage (super lightweight)
 # =============================
-FROM eclipse-temurin:17-jdk-alpine
+# Use JRE instead of JDK → MUCH smaller
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
-# Copy only the fat JAR from the previous stage
-COPY --from=build /app/target/*.jar app.jar
+# Copy only the JAR file from the build stage
+COPY --from=build /app/target/*jar app.jar
 
-# Spring Boot default port (change if needed)
+# Runtime port
 EXPOSE 8083
 
-# Run the service
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Better: Enable memory optimizations for containers
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]

@@ -86,7 +86,7 @@ pipeline {
             steps {
                 sh """
                     . venv/bin/activate
-                    python MLOpsPipeline/codes/register_model.py
+                    python3 MLOpsPipeline/codes/register_model.py
                 """
             }
         }

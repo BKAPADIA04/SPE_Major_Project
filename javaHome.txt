@@ -3,3 +3,19 @@ export PATH=$JAVA_HOME/bin:$PATH
 
 
 mvn spring-boot:run
+
+kubectl apply -f k8s/ambulance/deployment.yaml
+kubectl apply -f k8s/ambulance/service.yaml
+kubectl apply -f k8s/dispatch/deployment.yaml
+kubectl apply -f k8s/dispatch/service.yaml
+kubectl apply -f k8s/emergency/deployment.yaml
+kubectl apply -f k8s/emergency/service.yaml
+kubectl apply -f filebeat-configmap.yaml
+
+
+kubectl create namespace spe-system-1
+
+eval $(minikube docker-env) 
+docker build -t ambulance-location-service:latest .
+
+minikube service ambulance-service --url -n spe-system-1
