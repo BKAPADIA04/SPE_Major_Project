@@ -119,5 +119,49 @@ pipeline {
                 """
             }
         }
+
+        stage('Apply k8s') {
+            steps {
+                sh """
+                    kubectl apply -f k8s/ --recursive
+                    
+                """
+            }
+        }
+
+        stage('Wait for Pods Ready Services') {
+            steps {
+                sh """
+                    echo "Waiting for all pods to be ready..."
+                    kubectl wait --for=condition=ready pod --all -n spe-system-1 --timeout=240s
+                """
+            }
+        }
+
+        stage('Wait for Pods Ready Default') {
+            steps {
+                sh """
+                    echo "Waiting for all pods to be ready..."
+                    kubectl wait --for=condition=ready pod --all -n default --timeout=300s
+                """
+            }
+        }
+
+        stage('Verify Deployments') {
+            steps {
+                sh """
+                    kubectl get pods -n=spe-system-1
+                    kubectl get pods -n=default
+                """
+            }
+        }
+
+        stage('Start Kibana') {
+            steps {
+                sh """
+                    minikube service kibana
+                """
+            }
+        }
     }
 }
