@@ -107,7 +107,7 @@ pipeline {
                 sh """
                     docker build -t ambulance-location-service:latest ./AmbulanceLocationService
                     docker build -t dispatch-service:latest ./DispatchService
-                    docker build -t emergency-service:latest ./EmergencyService
+                    docker build -t emergency-service:latest ./EmergencyRequestService
                 """
             }
         }
