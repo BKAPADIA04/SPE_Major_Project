@@ -8,6 +8,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(SCRIPT_DIR, "../models/model.pkl")
 
 
+
 def register_model():
 
     model = joblib.load(MODEL_PATH)
