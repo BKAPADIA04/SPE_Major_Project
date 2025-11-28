@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: dispatch-service
+      annotations:
+        co.elastic.logs/enabled: "true"
     spec:
       containers:
         - name: dispatch-service

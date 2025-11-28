@@ -19,6 +19,7 @@ public class DispatchController {
 
     @PostMapping
     public ResponseEntity<DispatchResponse> dispatch(@Valid @RequestBody DispatchRequest request) {
+        System.out.println("Received dispatch request: " + request);
         return dispatchService.findNearestAmbulance(request)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

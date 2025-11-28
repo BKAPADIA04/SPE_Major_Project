@@ -23,11 +23,13 @@ public class EmergencyController {
     @PostMapping
     public ResponseEntity<EmergencyRequest> create(@Valid @RequestBody CreateEmergencyRequest request) {
         EmergencyRequest created = emergencyService.createEmergency(request);
+        System.out.println("Created emergency request: " + created);
         return ResponseEntity.ok(created);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EmergencyRequest> getById(@PathVariable UUID id) {
+        System.out.println("Fetching emergency request with ID: " + id);
         return emergencyService.getEmergency(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -35,6 +37,7 @@ public class EmergencyController {
 
     @GetMapping
     public List<EmergencyRequest> getAll() {
+        System.out.println("Fetching all emergency requests");
         return emergencyService.getAll();
     }
 }

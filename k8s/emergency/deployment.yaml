@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: emergency-service
+      annotations:
+        co.elastic.logs/enabled: "true"
     spec:
       containers:
         - name: emergency-service

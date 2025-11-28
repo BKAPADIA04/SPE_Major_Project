@@ -28,21 +28,25 @@ public class AmbulanceController {
                                               @RequestParam double longitude) {
         Ambulance created = ambulanceService.register(plateNumber, latitude, longitude);
         logger.info("Received register request for plateNumber={}", plateNumber);
-        System.out.println("Application has started!");
+        System.out.println("Ambulance with plate number " + plateNumber 
+        + " created at latitude " + latitude 
+        + " and longitude " + longitude);
+
         return ResponseEntity.ok(created);
     }
 
     @GetMapping
     public List<Ambulance> getAll() {
         logger.info("Received request to get all ambulances");
-        System.out.println("Application has started!");
+        System.out.println("Received request to get all ambulances");
         return ambulanceService.getAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Ambulance> getById(@PathVariable UUID id) {
         logger.info("Received request to get ambulance by id={}", id);
-        System.out.println("Application has started!");
+        System.out.println("Received request to get ambulance by id=" + id);
+
         return ambulanceService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -54,7 +58,12 @@ public class AmbulanceController {
                                                     @RequestParam double longitude) {
 
         logger.info("Received request to update location for ambulance id={}, latitude={}, longitude={}", id, latitude, longitude);
-        System.out.println("Application has started!");
+        System.out.println(
+            "Received request to update location for ambulance id=" + id +
+            ", latitude=" + latitude +
+            ", longitude=" + longitude
+        );
+
         return ambulanceService.updateLocation(id, latitude, longitude)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -64,7 +73,8 @@ public class AmbulanceController {
     public ResponseEntity<Ambulance> updateStatus(@PathVariable UUID id,
                                                   @RequestParam AmbulanceStatus status) {
         logger.info("Received request to update status for ambulance id={}, status={}", id, status);
-        System.out.println("Application has started!");
+        System.out.println("Received request to update status for ambulance id=" 
+        + id + ", status=" + status);
         return ambulanceService.updateStatus(id, status)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
