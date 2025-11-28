@@ -106,5 +106,6 @@ model_pipeline = Pipeline(
     ]
 )
 
+
 def create_pipeline():
     return model_pipeline

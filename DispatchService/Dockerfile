@@ -5,33 +5,34 @@ FROM maven:3.9-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-# Copy Maven files first for dependency caching
+# Copy Maven wrapper + config first (cache dependencies)
 COPY pom.xml .
 COPY mvnw .
 COPY .mvn .mvn
 
-# Pre-download dependencies for faster builds
-RUN mvn -B dependency:go-offline
+# Download dependencies (cached)
+RUN ./mvnw -B dependency:go-offline || mvn -B dependency:go-offline
 
-# Copy the rest of your source code
+# Copy src only after dependency cache is built
 COPY src ./src
 
-# Build the application JAR
-RUN mvn -B clean package -DskipTests
+# Build JAR
+RUN ./mvnw -B clean package -DskipTests || mvn -B clean package -DskipTests
 
 
 # =============================
-# 2) Run Stage (lightweight JRE)
+# 2) Run Stage (super lightweight)
 # =============================
-FROM eclipse-temurin:17-jdk-alpine
+# Use JRE instead of JDK → MUCH smaller
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
-# Copy the packaged JAR from the build stage
-COPY --from=build /app/target/*.jar app.jar
+# Copy only the JAR file from the build stage
+COPY --from=build /app/target/*jar app.jar
 
-# Expose the port (adjust if your app uses a different one)
+# Runtime port
 EXPOSE 8082
 
-# Start the Spring Boot service
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Better: Enable memory optimizations for containers
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]

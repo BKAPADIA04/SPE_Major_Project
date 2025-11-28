@@ -22,6 +22,7 @@ pipeline {
                     pip install --upgrade pip
                     pip install -r requirements.txt
                     pip install dvc[yaml]
+                    pip install ansible requests docker
                 """
             }
         }
@@ -86,22 +87,65 @@ pipeline {
             steps {
                 sh """
                     . venv/bin/activate
-                    python MLOpsPipeline/codes/register_model.py
+                    python3 MLOpsPipeline/codes/register_model.py
                 """
             }
         }
 
-        // stage('Commit Updated Lockfile') {
-        //     steps {
-        //         sh """
-        //             git config user.email "jenkins@example.com"
-        //             git config user.name "Jenkins"
+        stage('Start Minikube') {
+            steps {
+                sh """
+                    minikube start --driver=docker --cpus=4 --memory=7800
+                    minikube status
+                    eval \$(minikube -p minikube docker-env)
+                """
+            }
+        }
 
-        //             git add dvc.lock
-        //             git commit -m "Auto-update: retrained model via Jenkins" || true
-        //             git push origin main || true
-        //         """
-        //     }
-        // }
+        stage('Build Docker Images') {
+            steps {
+                sh """
+                    docker build -t ambulance-location-service:latest ./AmbulanceLocationService
+                    docker build -t dispatch-service:latest ./DispatchService
+                    docker build -t emergency-service:latest ./EmergencyRequestService
+                """
+            }
+        }
+
+        stage('Apply k8s') {
+            steps {
+                sh """
+                    kubectl apply -f k8s/ --recursive
+                    
+                """
+            }
+        }
+
+        stage('Wait for Pods Ready Services') {
+            steps {
+                sh """
+                    echo "Waiting for all pods to be ready..."
+                    kubectl wait --for=condition=ready pod --all -n spe-system-1 --timeout=240s
+                """
+            }
+        }
+
+        stage('Wait for Pods Ready Default') {
+            steps {
+                sh """
+                    echo "Waiting for all pods to be ready..."
+                    kubectl wait --for=condition=ready pod --all -n default --timeout=300s
+                """
+            }
+        }
+
+        stage('Verify Deployments') {
+            steps {
+                sh """
+                    kubectl get pods -n=spe-system-1
+                    kubectl get pods -n=default
+                """
+            }
+        }
     }
 }

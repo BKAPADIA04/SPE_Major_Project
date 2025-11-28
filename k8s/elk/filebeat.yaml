@@ -1,0 +1,132 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: default
+data:
+  filebeat.yml: |
+    ##############################
+    # 1) Custom App Log Files
+    ##############################
+    filebeat.inputs:
+      - type: filestream
+        id: spe-app-logs
+        enabled: true
+        paths:
+          - /app/logs/*.log
+        fields:
+          log_source: "spe-app"
+        fields_under_root: true
+
+    ##############################
+    # 2) Kubernetes Autodiscover
+    ##############################
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          namespaces:
+            - spe-system-1
+          hints.enabled: true
+
+    processors:
+      - add_cloud_metadata: ~
+
+    ##############################
+    # 3) Output to Elasticsearch
+    ##############################
+    output.elasticsearch:
+      hosts: ["http://elasticsearch.default.svc.cluster.local:9200"]
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: filebeat
+  namespace: default
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: filebeat
+rules:
+- apiGroups: [""]
+  resources:
+    - pods
+    - pods/log
+    - namespaces
+    - nodes
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources:
+    - deployments
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: filebeat
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: filebeat
+subjects:
+- kind: ServiceAccount
+  name: filebeat
+  namespace: default
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: filebeat
+  namespace: default
+  labels:
+    app: filebeat
+spec:
+  selector:
+    matchLabels:
+      app: filebeat
+  template:
+    metadata:
+      labels:
+        app: filebeat
+    spec:
+      serviceAccountName: filebeat
+      containers:
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:8.12.0
+          args: ["-c", "/etc/filebeat.yml", "-e"]
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          volumeMounts:
+            - name: config
+              mountPath: /etc/filebeat.yml
+              subPath: filebeat.yml
+            - name: varlog
+              mountPath: /var/log
+            - name: containers
+              mountPath: /var/lib/docker/containers
+            - name: app-logs                   # 🔥 Mount your application logs
+              mountPath: /app-logs
+      volumes:
+        - name: config
+          configMap:
+            name: filebeat-config
+
+        - name: varlog
+          hostPath:
+            path: /var/log
+
+        - name: containers
+          hostPath:
+            path: /var/lib/docker/containers
+
+        - name: app-logs                      # 🔥 hostPath where your app writes logs
+          hostPath:
+            path: /app/logs
