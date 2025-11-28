@@ -155,13 +155,5 @@ pipeline {
                 """
             }
         }
-
-        stage('Start Kibana') {
-            steps {
-                sh """
-                    minikube service kibana
-                """
-            }
-        }
     }
 }
