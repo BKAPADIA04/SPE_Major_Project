@@ -22,6 +22,7 @@ pipeline {
                     pip install --upgrade pip
                     pip install -r requirements.txt
                     pip install dvc[yaml]
+                    pip install ansible requests docker
                 """
             }
         }
@@ -91,17 +92,32 @@ pipeline {
             }
         }
 
-        // stage('Commit Updated Lockfile') {
-        //     steps {
-        //         sh """
-        //             git config user.email "jenkins@example.com"
-        //             git config user.name "Jenkins"
+        stage('Start Minikube') {
+            steps {
+                sh """
+                    minikube start --driver=docker --cpus=4 --memory=7800
+                    minikube status
+                    eval \$(minikube -p minikube docker-env)
+                """
+            }
+        }
 
-        //             git add dvc.lock
-        //             git commit -m "Auto-update: retrained model via Jenkins" || true
-        //             git push origin main || true
-        //         """
-        //     }
-        // }
+        stage('Build Docker Images') {
+            steps {
+                sh """
+                    docker build -t ambulance-location-service:latest ./AmbulanceLocationService
+                    docker build -t dispatch-service:latest ./DispatchService
+                    docker build -t emergency-service:latest ./EmergencyService
+                """
+            }
+        }
+
+        stage('Check Docker Images') {
+            steps {
+                sh """
+                    docker images
+                """
+            }
+        }
     }
 }
