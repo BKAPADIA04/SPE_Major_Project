@@ -7,15 +7,19 @@ public class EmergencyRequest {
 
     private UUID id;
     private String patientName;
+    private String plateNumber;     // NEW FIELD
     private double latitude;
     private double longitude;
     private EmergencyStatus status;
     private Instant createdAt;
+    private double price;           // NEW FIELD
 
-    public EmergencyRequest(UUID id, String patientName, double latitude, double longitude,
+    public EmergencyRequest(UUID id, String patientName, String plateNumber,
+                            double latitude, double longitude,
                             EmergencyStatus status, Instant createdAt) {
         this.id = id;
         this.patientName = patientName;
+        this.plateNumber = plateNumber;   // NEW
         this.latitude = latitude;
         this.longitude = longitude;
         this.status = status;
@@ -39,6 +43,14 @@ public class EmergencyRequest {
 
     public void setPatientName(String patientName) {
         this.patientName = patientName;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
     }
 
     public double getLatitude() {
@@ -71,5 +83,13 @@ public class EmergencyRequest {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

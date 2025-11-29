@@ -61,3 +61,14 @@ kubectl apply -f filebeat.yaml
 minikube service emergency-service --url -n spe-system-1
 minikube service dispatch-service --url -n spe-system-1
 minikube service ambulance-service --url -n spe-system-1
+
+
+For flask api- 
+python3 MLOpsPipeline/codes/register_model.py 
+python3 MLflowModelAPI/mlflow_api.py
+
+mlflow server \                                              
+  --backend-store-uri sqlite:///mlflow.db \
+  --default-artifact-root file:/home/siddeshwar/Desktop/SPE_Major_Project/mlruns \
+  --host 127.0.0.1 \
+  --port 5001

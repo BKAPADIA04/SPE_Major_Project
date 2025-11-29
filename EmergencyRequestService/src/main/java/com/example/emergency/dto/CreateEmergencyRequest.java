@@ -8,6 +8,9 @@ public class CreateEmergencyRequest {
     @NotBlank
     private String patientName;
 
+    @NotBlank                // NEW FIELD
+    private String plateNumber;
+
     @NotNull
     private Double latitude;
 
@@ -20,6 +23,14 @@ public class CreateEmergencyRequest {
 
     public void setPatientName(String patientName) {
         this.patientName = patientName;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
     }
 
     public Double getLatitude() {
