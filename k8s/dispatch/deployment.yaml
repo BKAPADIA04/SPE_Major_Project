@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: dispatch-service
-          image: dispatch-service:latest
+          image: dispatch-service:local
           imagePullPolicy: Never
           ports:
             - containerPort: 8082

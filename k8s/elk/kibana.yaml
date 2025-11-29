@@ -30,6 +30,11 @@ spec:
       containers:
         - name: kibana
           image: docker.elastic.co/kibana/kibana:8.12.0
+          
+          env:                      # <-- ADD THIS BLOCK
+            - name: KIBANA_PATH_CONF
+              value: /usr/share/kibana/config
+
           ports:
             - containerPort: 5601
           volumeMounts:
@@ -40,6 +45,7 @@ spec:
         - name: kibana-config
           configMap:
             name: kibana-config
+
 ---
 apiVersion: v1
 kind: Service

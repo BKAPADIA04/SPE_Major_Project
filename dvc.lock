@@ -10,13 +10,13 @@ stages:
       isexec: true
     - path: MLOpsPipeline/data/data_slices
       hash: md5
-      md5: 8fc0db432173d37db06e229a27ff7ffa.dir
-      size: 3087346
-      nfiles: 2
+      md5: 8a1d63a39cee889aa1090e2fede76d1b.dir
+      size: 1542713
+      nfiles: 1
     outs:
     - path: params.yaml
       hash: md5
-      md5: b713e50e0f72e009cd692d3ebae4dcd7
+      md5: 781d7701588c08937c207459a37d288b
       size: 59
   train:
     cmd: python3 MLOpsPipeline/codes/train.py --slice $(yq -r '.train.slice' 
@@ -29,8 +29,8 @@ stages:
       isexec: true
     - path: MLOpsPipeline/codes/pipeline.py
       hash: md5
-      md5: 9ace8a3a0d8bcc6e3178f01b03429a0c
-      size: 3307
+      md5: ede26177398c06ad567e42f031649fea
+      size: 3308
       isexec: true
     - path: MLOpsPipeline/codes/train.py
       hash: md5
@@ -39,15 +39,15 @@ stages:
       isexec: true
     - path: MLOpsPipeline/data/data_slices
       hash: md5
-      md5: 8fc0db432173d37db06e229a27ff7ffa.dir
-      size: 3087346
-      nfiles: 2
+      md5: 8a1d63a39cee889aa1090e2fede76d1b.dir
+      size: 1542713
+      nfiles: 1
     - path: params.yaml
       hash: md5
-      md5: b713e50e0f72e009cd692d3ebae4dcd7
+      md5: 781d7701588c08937c207459a37d288b
       size: 59
     outs:
     - path: MLOpsPipeline/models/model.pkl
       hash: md5
-      md5: 24ba5030dcedcb3e949a5d92e13df16c
-      size: 146941
+      md5: 2e87cba4971f60900e15a2cbce478612
+      size: 145213

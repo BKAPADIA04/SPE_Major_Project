@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: emergency-service
-          image: emergency-service:latest
+          image: emergency-service:local
           imagePullPolicy: Never
           ports:
             - containerPort: 8081
