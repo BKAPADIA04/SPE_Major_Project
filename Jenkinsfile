@@ -9,7 +9,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'mlflow', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
+                git branch: 'final', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
 
             }
         }
