@@ -5,3 +5,17 @@ export PATH=$JAVA_HOME/bin:$PATH
 mvn spring-boot:run
 
 ngrok http 8090 --hostname=nonpharmaceutic-claud-movingly.ngrok-free.dev
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+To start docker in minikube:
+
+eval $(minikube docker-env)
+
+cd EmergencyRequestService
+docker build -t emergency-service:local .
+
+cd ../DispatchService
+docker build -t dispatch-service:local .
+
+cd ../AmbulanceLocationService
+docker build -t ambulance-location-service:local .
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
