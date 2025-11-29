@@ -65,6 +65,8 @@ minikube service ambulance-service --url -n spe-system-1
 
 For flask api- 
 python3 MLOpsPipeline/codes/register_model.py 
+
+export PYTHONPATH="$(pwd)/MLOpsPipeline/codes"            
 python3 MLflowModelAPI/mlflow_api.py
 
 mlflow server \                                              
