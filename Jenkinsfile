@@ -9,6 +9,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
+                cleanWs()
                 git branch: 'final', url: 'https://github.com/BKAPADIA04/SPE_Major_Project.git'
 
             }
