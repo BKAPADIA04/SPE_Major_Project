@@ -45,7 +45,8 @@ spec:
         - name: kibana-config
           configMap:
             name: kibana-config
-
+ 
+ 
 ---
 apiVersion: v1
 kind: Service
