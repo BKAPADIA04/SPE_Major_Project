@@ -1,0 +1,22 @@
+artifact_path: /Users/bhavyakapadia/Desktop/SPE_Major_Project/mlruns/1/models/m-fbfa5d99eb0a448e85a23a93771ddc76/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.0
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.6.0
+model_id: m-fbfa5d99eb0a448e85a23a93771ddc76
+model_size_bytes: 154149
+model_uuid: m-fbfa5d99eb0a448e85a23a93771ddc76
+prompts: null
+run_id: b60cd61b2b434cf482af86b2bbd50e11
+utc_time_created: '2025-11-30 10:05:27.239612'

@@ -21,4 +21,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
+          env:
+            - name: AMBULANCE_SERVICE_BASE_URL
+              value: "http://ambulance-service.spe-system.svc.cluster.local:8083"
       
