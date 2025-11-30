@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ambulance-service
-          image: ambulance-location-service:latest
-          imagePullPolicy: Never
+          image: ambulance-location-service:local
+          imagePullPolicy: Always
           ports:
             - containerPort: 8083
