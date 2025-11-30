@@ -151,6 +151,10 @@ pipeline {
         }
 
 
+
+
+
+
         
 
         // stage('Wait for Pods Ready (spe-system-1)') {
@@ -174,6 +178,7 @@ pipeline {
                 sh """
                     kubectl get pods -n spe-system-1
                     kubectl get pods -n default
+                    
                 """
             }
         }
