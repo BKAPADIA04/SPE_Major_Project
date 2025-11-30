@@ -8,7 +8,7 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Add custom modules (pipeline.py, data_loader.py, etc.)
-sys.path.append(SCRIPT_DIR)
+# sys.path.append(SCRIPT_DIR)
 
 # Model path
 MODEL_PATH = os.path.join(SCRIPT_DIR, "../models/model.pkl")
@@ -24,9 +24,8 @@ def register_model():
 
         mlflow.sklearn.log_model(
             sk_model=model,
-            artifact_path="model",               # MUST USE THIS
-            registered_model_name="SPE_Regression_Model",
-            code_paths=[SCRIPT_DIR]              # NOW MLflow will embed your code
+            name="model",               # MUST USE THIS
+            registered_model_name="SPE_Regression_Model"
         )
 
         print("Model successfully registered!")
