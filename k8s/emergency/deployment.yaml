@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: emergency-service
-          image: emergency-service:local
+          image: bkapadia04/emergency-service:local
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
+      

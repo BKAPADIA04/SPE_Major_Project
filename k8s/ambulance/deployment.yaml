@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: ambulance-service
-          image: ambulance-location-service:local
+          image: bkapadia04/ambulance-service:local
           imagePullPolicy: Always
           ports:
             - containerPort: 8083
+      

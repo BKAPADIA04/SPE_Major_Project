@@ -120,19 +120,19 @@ pipeline {
                     sh '''
                         echo "Building Docker images..."
 
-                        docker build -t ambulance-location-service:local ./AmbulanceLocationService
+                        docker build -t ambulance-service:local ./AmbulanceLocationService
                         docker build -t dispatch-service:local ./DispatchService
                         docker build -t emergency-service:local ./EmergencyRequestService
 
                         echo "Tagging..."
-                        docker tag ambulance-location-service:local $DOCKERHUB_USER/ambulance-location-service:local
+                        docker tag ambulance-service:local $DOCKERHUB_USER/ambulance-service:local
                         docker tag dispatch-service:local $DOCKERHUB_USER/dispatch-service:local
                         docker tag emergency-service:local $DOCKERHUB_USER/emergency-service:local
 
                         echo "Pushing..."
                         echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
 
-                        docker push $DOCKERHUB_USER/ambulance-location-service:local
+                        docker push $DOCKERHUB_USER/ambulance-service:local
                         docker push $DOCKERHUB_USER/dispatch-service:local
                         docker push $DOCKERHUB_USER/emergency-service:local
                     '''
