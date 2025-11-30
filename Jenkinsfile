@@ -150,21 +150,21 @@ pipeline {
             }
         }
 
-        stage('Wait for Pods Ready (spe-system-1)') {
-            steps {
-                sh """
-                    kubectl wait --for=condition=ready pod --all -n spe-system-1 --timeout=240s
-                """
-            }
-        }
+        // stage('Wait for Pods Ready (spe-system-1)') {
+        //     steps {
+        //         sh """
+        //             kubectl wait --for=condition=ready pod --all -n spe-system-1 --timeout=240s
+        //         """
+        //     }
+        // }
 
-        stage('Wait for Pods Ready (default)') {
-            steps {
-                sh """
-                    kubectl wait --for=condition=ready pod --all -n default --timeout=300s
-                """
-            }
-        }
+        // stage('Wait for Pods Ready (default)') {
+        //     steps {
+        //         sh """
+        //             kubectl wait --for=condition=ready pod --all -n default --timeout=300s
+        //         """
+        //     }
+        // }
 
         stage('Verify Deployments') {
             steps {
