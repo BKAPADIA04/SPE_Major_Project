@@ -64,10 +64,13 @@ minikube service ambulance-service --url -n spe-system-1
 
 kubectl apply -f k8s/ambulance/deployment.yaml -n spe-system-1
 kubectl apply -f k8s/ambulance/service.yaml -n spe-system-1
+kubectl apply -f k8s/ambulance/hpa.yaml -n spe-system-1
 kubectl apply -f k8s/dispatch/deployment.yaml -n spe-system-1
 kubectl apply -f k8s/dispatch/service.yaml -n spe-system-1
+kubectl apply -f k8s/dispatch/hpa.yaml -n spe-system-1
 kubectl apply -f k8s/emergency/deployment.yaml -n spe-system-1
 kubectl apply -f k8s/emergency/service.yaml -n spe-system-1
+kubectl apply -f k8s/emergency/hpa.yaml -n spe-system-1
 kubectl apply -f k8s/ingress/ingress.yaml -n spe-system-1
 kubectl apply -f k8s/elk/elasticsearch.yaml
 kubectl apply -f k8s/elk/kibana.yaml

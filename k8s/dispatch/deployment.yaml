@@ -24,4 +24,8 @@ spec:
           env:
             - name: AMBULANCE_SERVICE_BASE_URL
               value: "http://ambulance-service.spe-system.svc.cluster.local:8083"
+          resources:
+            requests:
+              cpu: "200m"
+
       
