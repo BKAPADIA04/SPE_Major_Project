@@ -6,21 +6,6 @@ import pandas as pd
 import uvicorn
 
 # ---------------------------
-# 1. Load MLflow Model
-# ---------------------------
-mlflow.set_tracking_uri("http://127.0.0.1:5001")
-model_name = "SPE_Regression_Model"
-
-# Get latest version
-client = mlflow.tracking.MlflowClient()
-versions = client.search_model_versions(f"name='{model_name}'")
-latest = max(versions, key=lambda v: int(v.version))
-model_uri = f"models:/{model_name}/{latest.version}"
-
-print("Loading model:", model_uri)
-model = mlflow.pyfunc.load_model(model_uri)
-
-# ---------------------------
 # 2. FastAPI App
 # ---------------------------
 app = FastAPI()
@@ -38,6 +23,21 @@ class PricePredictionInput(BaseModel):
 def predict(input: PricePredictionInput):
 
     df = pd.DataFrame([input.dict()])
+    
+    # ---------------------------
+    # 1. Load MLflow Model
+    # ---------------------------
+    mlflow.set_tracking_uri("http://127.0.0.1:5001")
+    model_name = "SPE_Regression_Model"
+
+    # Get latest version
+    client = mlflow.tracking.MlflowClient()
+    versions = client.search_model_versions(f"name='{model_name}'")
+    latest = max(versions, key=lambda v: int(v.version))
+    model_uri = f"models:/{model_name}/{latest.version}"
+
+    print("Loading model:", model_uri)
+    model = mlflow.pyfunc.load_model(model_uri)
 
     prediction = model.predict(df)[0]
 
