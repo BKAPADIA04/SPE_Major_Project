@@ -36,15 +36,6 @@ pipeline {
             }
         }
 
-        stage('Show Slice Count') {
-            steps {
-                sh """
-                    echo "==== GENERATED SLICE COUNT ===="
-                    cat MLOpsPipeline/codes/params.log || echo "No params.log found"
-                """
-            }
-        }
-
         stage('Run DVC Pipeline') {
             steps {
                 sh """
@@ -85,6 +76,7 @@ pipeline {
             steps {
                 sh """
                     minikube start --driver=docker --cpus=4 --memory=7800
+                    minikube addons enable metrics-server
                     minikube status
                     eval \$(minikube -p minikube docker-env)
                 """
