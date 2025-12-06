@@ -40,8 +40,7 @@ flowchart TD
     B[Emergency Service]
     C[Dispatch Service]
     D[Ambulance Service]
-    E[Flask ML Prediction Service (/predict)]
-
+    E[ML Model for Pricing]
     A --> B
     B --> C
     C --> D
