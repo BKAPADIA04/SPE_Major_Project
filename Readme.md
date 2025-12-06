@@ -56,9 +56,10 @@ flowchart TD
     C[DVC Push to Remote Storage]
     D[DVC Reproduce Pipeline]
     E[Model Training]
-    F[DVC Pull Artifacts]
+    F[MLFlow Model Registy]
+    G[DVC Pull Artifacts]
 
     A --> B --> C
     C --> D --> E
-    E --> F
+    E --> F --> G
 ```
