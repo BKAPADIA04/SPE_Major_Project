@@ -46,3 +46,21 @@ flowchart TD
     C --> D
     D --> E
 ```
+
+## 🔹 MLOps Pipeline using DVC
+
+```mermaid
+flowchart TD
+    A[Data Ingestion]
+    B[DVC Add Data]
+    C[DVC Push to Remote Storage]
+    D[DVC Reproduce Pipeline]
+    E[Model Training]
+    F[DVC Pull Artifacts]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+```
