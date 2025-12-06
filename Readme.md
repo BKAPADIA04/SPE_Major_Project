@@ -58,9 +58,7 @@ flowchart TD
     E[Model Training]
     F[DVC Pull Artifacts]
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
+    A --> B --> C
+    C --> D --> E
     E --> F
 ```
